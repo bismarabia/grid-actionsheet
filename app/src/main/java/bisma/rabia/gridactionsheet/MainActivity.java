@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import bisma.rabia.gridactionsheet.databinding.ActivityMainBinding;
-import bisma.rabia.library.ActionSheetBuilder;
+import bisma.rabia.library.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,12 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
         activityMainBinding.btnShowActionSheet.setOnClickListener(v ->
                 new ActionSheetBuilder(this)
-                        .withActions(new ArrayList<ActionSheetBuilder.Action>() {{
-                            add(new ActionSheetBuilder.Action(0, getResources().getDrawable(R.drawable.ic_menu_camera), "Camera"));
-                            add(new ActionSheetBuilder.Action(1, getResources().getDrawable(R.drawable.ic_menu_gallery), "Gallery"));
-                            add(new ActionSheetBuilder.Action(2, getResources().getDrawable(R.drawable.ic_menu_manage), "Manage"));
-                            add(new ActionSheetBuilder.Action(3, getResources().getDrawable(R.drawable.ic_menu_send), "Send"));
-                            add(new ActionSheetBuilder.Action(4, getResources().getDrawable(R.drawable.ic_menu_share), "Share"));
+                        .withDefaultActionIcon(R.drawable.ico_unknown_black_24dp)
+                        .withActions(new ArrayList<Action>() {{
+                            add(new Action(0, 0, "Camera"));
+                            add(new Action(1, getResources().getDrawable(R.drawable.ic_menu_gallery), "Gallery"));
+                            add(new Action(2, getResources().getDrawable(R.drawable.ic_menu_manage), "Manage"));
+                            add(new Action(3, getResources().getDrawable(R.drawable.ic_menu_send), "Send"));
+                            add(new Action(4, getResources().getDrawable(R.drawable.ic_menu_share), "Share"));
                         }})
                         .withActionsClickListener(aId -> {
                             // handle item click event.

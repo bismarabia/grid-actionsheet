@@ -22,7 +22,7 @@ import static bisma.rabia.library.util.Utils.TAG;
 
 public class ActionSheet extends BottomSheetDialogFragment {
 
-    private List<ActionSheetBuilder.Action> mActions;
+    private List<Action> mActions;
     private ActionSheetBuilder.IActionSheetActionClickListener mActionsClickListener;
     private int mLayout;
     private ActionSheetBuilder mActionSheetBuilder;
@@ -128,15 +128,15 @@ public class ActionSheet extends BottomSheetDialogFragment {
     /**
      * grid adapter class.
      */
-    static class ActionAdapter extends ArrayAdapter<ActionSheetBuilder.Action> {
+    static class ActionAdapter extends ArrayAdapter<Action> {
 
         private final Context mContext;
         private final int mFullWidth;
         private ActionSheet mActionSheet;
-        private List<ActionSheetBuilder.Action> mActions;
+        private List<Action> mActions;
         private ActionSheetBuilder.IActionSheetActionClickListener mActionsClickListener;
 
-        public ActionAdapter(@NonNull ActionSheet aActionSheet, List<ActionSheetBuilder.Action> actions, ActionSheetBuilder.IActionSheetActionClickListener aActionsClickListener) {
+        public ActionAdapter(@NonNull ActionSheet aActionSheet, List<Action> actions, ActionSheetBuilder.IActionSheetActionClickListener aActionsClickListener) {
             super(Utils.getSafeContext(aActionSheet.getContext()), 0, actions);
             mContext = aActionSheet.getContext();
             mActionSheet = aActionSheet;
@@ -157,9 +157,18 @@ public class ActionSheet extends BottomSheetDialogFragment {
                 actionListItemBinding = DataBindingUtil.bind(contentView);
             }
             if (Utils.isObjectNotNull(actionListItemBinding)) {
-                final ActionSheetBuilder.Action action = mActions.get(position);
+                final Action action = mActions.get(position);
 
                 // set action variable to the layout
+                if (Utils.isObjectNull(action.getDrawable())) {
+                    if (action.getIconDrwInt() != 0) {
+                        action.setIconDrw(mContext.getResources().getDrawable(action.getIconDrwInt()));
+                    }
+                    else {
+                        final int defaultIcon = mActionSheet.mActionSheetBuilder.getDefaultActionIcon();
+                        action.setIconDrw(mContext.getResources().getDrawable(defaultIcon != 0 ? defaultIcon : R.drawable.ico_unknown_black_24dp));
+                    }
+                }
                 actionListItemBinding.setAction(action);
 
                 // set action click listener.
