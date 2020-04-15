@@ -1,4 +1,4 @@
-package bisma.rabia.actionsheet;
+package bisma.rabia.actionsheet.model;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;

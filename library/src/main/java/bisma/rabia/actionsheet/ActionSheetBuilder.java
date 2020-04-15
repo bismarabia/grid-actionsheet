@@ -2,10 +2,11 @@ package bisma.rabia.actionsheet;
 
 import android.view.View;
 
-import java.util.List;
+import java.util.*;
 
 import androidx.annotation.*;
 import androidx.fragment.app.FragmentActivity;
+import bisma.rabia.actionsheet.model.*;
 
 public class ActionSheetBuilder {
 
@@ -25,6 +26,7 @@ public class ActionSheetBuilder {
 
     private FragmentActivity mActivity;
     private List<Action> mActions;
+    private List<ActionGroup> mGroupedActions;
     private int mLayout;
     private IActionSheetExtraLayout mIActionSheetExtraLayout;
     private IActionSheetActionClickListener mActionsClickListener;
@@ -40,6 +42,17 @@ public class ActionSheetBuilder {
      */
     public ActionSheetBuilder withActions(List<Action> aActions) {
         mActions = aActions;
+        return this;
+    }
+
+    /**
+     * seting this will ignore mActions
+     *
+     * @param aActions map of group title to list of actions inside.
+     * @return the current instance.
+     */
+    public ActionSheetBuilder withGroupedActions(List<ActionGroup> aActions) {
+        mGroupedActions = aActions;
         return this;
     }
 
@@ -90,6 +103,13 @@ public class ActionSheetBuilder {
      */
     public List<Action> getActions() {
         return mActions;
+    }
+
+    /**
+     * @return map of groups and its actions
+     */
+    public List<ActionGroup> getGroupedActions() {
+        return mGroupedActions;
     }
 
     /**

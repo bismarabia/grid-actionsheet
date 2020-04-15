@@ -9,6 +9,11 @@
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
+    <style name="View_M0">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
     <style name="View_MW">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

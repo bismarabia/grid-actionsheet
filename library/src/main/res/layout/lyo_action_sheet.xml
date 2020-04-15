@@ -39,6 +39,12 @@
                 android:numColumns="4"
                 android:horizontalSpacing="15dp"
                 android:verticalSpacing="30dp"
+                android:visibility="gone"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_action_sheet"
+                style="@style/View_MW"
+                android:visibility="gone"
                 />
         </LinearLayout>
         <View

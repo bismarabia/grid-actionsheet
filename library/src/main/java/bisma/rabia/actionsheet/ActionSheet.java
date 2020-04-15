@@ -1,34 +1,40 @@
 package bisma.rabia.actionsheet;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
-import android.widget.ArrayAdapter;
 
 import com.annimon.stream.Stream;
 import com.google.android.material.bottomsheet.*;
 
-import java.util.List;
+import java.util.*;
 
 import androidx.annotation.*;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.*;
+import bisma.rabia.actionsheet.adapter.*;
 import bisma.rabia.actionsheet.databinding.*;
+import bisma.rabia.actionsheet.model.*;
 import bisma.rabia.actionsheet.util.Utils;
 
 import static bisma.rabia.actionsheet.util.Utils.TAG;
 
 public class ActionSheet extends BottomSheetDialogFragment {
 
+    private final FragmentActivity mActivity;
     private List<Action> mActions;
+    private List<ActionGroup> mGroupedActions;
     private ActionSheetBuilder.IActionSheetActionClickListener mActionsClickListener;
     private int mLayout;
     private ActionSheetBuilder mActionSheetBuilder;
 
     public ActionSheet(FragmentActivity aActivity, ActionSheetBuilder aActionSheetBuilder) {
+        mActivity = aActivity;
         mActions = aActionSheetBuilder.getActions();
+        mGroupedActions = aActionSheetBuilder.getGroupedActions();
         mActionsClickListener = aActionSheetBuilder.getActionsClickListener();
         mLayout = aActionSheetBuilder.getLayout();
         mActionSheetBuilder = aActionSheetBuilder;
@@ -74,11 +80,25 @@ public class ActionSheet extends BottomSheetDialogFragment {
                 }
             }
 
-            // filter only visible actions
-            mActions = Stream.of(mActions).filter(actions -> Utils.isObjectNull(actions.isVisible()) || actions.isVisible()).toList();
 
-            // set the adapter
-            actionSheetBinding.gridView.setAdapter(new ActionAdapter(this, mActions, mActionsClickListener));
+            final boolean isGroupsEnabled = mGroupedActions != null && !mGroupedActions.isEmpty();
+            if (isGroupsEnabled) {
+                // if groups are enabled
+                actionSheetBinding.rvActionSheet.setVisibility(View.VISIBLE);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
+                linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                actionSheetBinding.rvActionSheet.setLayoutManager(linearLayoutManager);
+                actionSheetBinding.rvActionSheet.setHasFixedSize(true);
+                actionSheetBinding.rvActionSheet.setAdapter(new ActionGroupAdapter(mActivity, this));
+            }
+            else {
+                // filter only visible actions
+                mActions = Stream.of(mActions).filter(actions -> Utils.isObjectNull(actions.isVisible()) || actions.isVisible()).toList();
+
+                // set the adapter
+                actionSheetBinding.gridView.setVisibility(View.VISIBLE);
+                actionSheetBinding.gridView.setAdapter(new ActionGridViewAdapter(this, mActions, mActionsClickListener));
+            }
 
             // cancel action sheet.
             actionSheetBinding.lyoActionSheetCancel.setOnClickListener(v -> dismiss());
@@ -125,70 +145,23 @@ public class ActionSheet extends BottomSheetDialogFragment {
         return R.style.ActionSheetTheme;
     }
 
-    /**
-     * grid adapter class.
-     */
-    static class ActionAdapter extends ArrayAdapter<Action> {
+    public List<Action> getActions() {
+        return mActions;
+    }
 
-        private final Context mContext;
-        private final int mFullWidth;
-        private ActionSheet mActionSheet;
-        private List<Action> mActions;
-        private ActionSheetBuilder.IActionSheetActionClickListener mActionsClickListener;
+    public List<ActionGroup> getGroupedActions() {
+        return mGroupedActions;
+    }
 
-        public ActionAdapter(@NonNull ActionSheet aActionSheet, List<Action> actions, ActionSheetBuilder.IActionSheetActionClickListener aActionsClickListener) {
-            super(Utils.getSafeContext(aActionSheet.getContext()), 0, actions);
-            mContext = aActionSheet.getContext();
-            mActionSheet = aActionSheet;
-            mActions = actions;
-            mActionsClickListener = aActionsClickListener;
-            mFullWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
-        }
+    public ActionSheetBuilder.IActionSheetActionClickListener getActionsClickListener() {
+        return mActionsClickListener;
+    }
 
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View contentView, @NonNull ViewGroup parent) {
-            LayoutActionSheetItemBinding actionListItemBinding;
-            if (contentView == null) {
-                actionListItemBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), R.layout.layout_action_sheet_item, parent, false);
-                contentView = actionListItemBinding.getRoot();
-            }
-            else {
-                actionListItemBinding = DataBindingUtil.bind(contentView);
-            }
-            if (Utils.isObjectNotNull(actionListItemBinding)) {
-                final Action action = mActions.get(position);
+    public int getLayout() {
+        return mLayout;
+    }
 
-                // set action variable to the layout
-                if (Utils.isObjectNull(action.getDrawable())) {
-                    if (action.getIconDrwInt() != 0) {
-                        action.setIconDrw(mContext.getResources().getDrawable(action.getIconDrwInt()));
-                    }
-                    else {
-                        final int defaultIcon = mActionSheet.mActionSheetBuilder.getDefaultActionIcon();
-                        action.setIconDrw(mContext.getResources().getDrawable(defaultIcon != 0 ? defaultIcon : R.drawable.ico_unknown_black_24dp));
-                    }
-                }
-                actionListItemBinding.setAction(action);
-
-                // set action click listener.
-                actionListItemBinding.lyoActionItem.setOnClickListener(v -> {
-                    if (Utils.isObjectNotNull(action.getOnClickListener())) {
-                        action.getOnClickListener().onClick(v);
-                    }
-                    else {
-                        mActionsClickListener.onActionClicked(action.getId());
-                    }
-                    mActionSheet.dismiss();
-                });
-
-                // set the action width and height.
-                final ViewGroup.LayoutParams layoutParams = actionListItemBinding.imvActionItemIcon.getLayoutParams();
-                final int size = mFullWidth / (4 * 3);
-                layoutParams.width = size;
-                layoutParams.height = size;
-            }
-            return contentView;
-        }
+    public ActionSheetBuilder getActionSheetBuilder() {
+        return mActionSheetBuilder;
     }
 }

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="action"
-            type="bisma.rabia.actionsheet.Action"
+            type="bisma.rabia.actionsheet.model.Action"
             />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
