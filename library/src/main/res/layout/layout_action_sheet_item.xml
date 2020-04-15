@@ -1,0 +1,37 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <variable
+            name="action"
+            type="bisma.rabia.library.ActionSheetBuilder.Action"
+            />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyo_action_item"
+        style="@style/View_MM.Selectable"
+        >
+        <ImageView
+            android:id="@+id/imv_action_item_icon"
+            style="@style/View_WW"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/txv_action_item_title"
+            android:src="@{action.drawable}"
+            />
+        <TextView
+            style="@style/Widget.MaterialComponents.TextView"
+            android:id="@+id/txv_action_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imv_action_item_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="12dp"
+            android:text="@{action.title}"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
