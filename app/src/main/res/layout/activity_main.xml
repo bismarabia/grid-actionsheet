@@ -19,6 +19,5 @@
             app:layout_constraintTop_toTopOf="parent"
             android:textAllCaps="false"
             />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

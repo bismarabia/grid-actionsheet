@@ -2,10 +2,11 @@ package bisma.rabia.actionsheet;
 
 import android.view.View;
 
-import java.util.*;
+import java.util.List;
 
 import androidx.annotation.*;
 import androidx.fragment.app.FragmentActivity;
+import bisma.rabia.actionsheet.adapter.*;
 import bisma.rabia.actionsheet.model.*;
 
 public class ActionSheetBuilder {
@@ -24,12 +25,33 @@ public class ActionSheetBuilder {
         void onLayoutBound(View aInflate);
     }
 
+    /**
+     * adapter callback
+     */
+    public interface IGroupActionAdapterCallBack {
+        void onGroupActionAdapterAdapted(ActionGroupAdapter aActionGroupAdapter);
+    }
+
+    /**
+     * group adapter callback
+     */
+    public interface IActionAdapterCallBack {
+        void onActionAdapterAdapted(ActionGridViewAdapter aActionGroupAdapter);
+    }
+
     private FragmentActivity mActivity;
     private List<Action> mActions;
     private List<ActionGroup> mGroupedActions;
     private int mLayout;
     private IActionSheetExtraLayout mIActionSheetExtraLayout;
     private IActionSheetActionClickListener mActionsClickListener;
+
+    private IGroupActionAdapterCallBack mGroupActionAdapterListener;
+    private ActionGroupAdapter mActionGroupAdapter;
+
+    private IActionAdapterCallBack mIActionAdapterCallBack;
+    private ActionGridViewAdapter mActionGridViewAdapter;
+
     private int mDefaultActionIcon;
 
     public ActionSheetBuilder(FragmentActivity aActivity) {
@@ -78,6 +100,16 @@ public class ActionSheetBuilder {
 
     public ActionSheetBuilder withDefaultActionIcon(@DrawableRes int aDefaultActionIcon) {
         mDefaultActionIcon = aDefaultActionIcon;
+        return this;
+    }
+
+    public ActionSheetBuilder withGroupActionAdapterListener(IGroupActionAdapterCallBack aAdapterListener) {
+        mGroupActionAdapterListener = aAdapterListener;
+        return this;
+    }
+
+    public ActionSheetBuilder withActionAdapterListener(IActionAdapterCallBack aIActionAdapterCallBack) {
+        mIActionAdapterCallBack = aIActionAdapterCallBack;
         return this;
     }
 
@@ -135,5 +167,29 @@ public class ActionSheetBuilder {
 
     public int getDefaultActionIcon() {
         return mDefaultActionIcon;
+    }
+
+    public IGroupActionAdapterCallBack getGroupActionAdapterListener() {
+        return mGroupActionAdapterListener;
+    }
+
+    public IActionAdapterCallBack getActionAdapterListener() {
+        return mIActionAdapterCallBack;
+    }
+
+    public void setActionGroupAdapter(ActionGroupAdapter aActionGroupAdapter) {
+        mActionGroupAdapter = aActionGroupAdapter;
+    }
+
+    public ActionGroupAdapter getGroupAdapter() {
+        return mActionGroupAdapter;
+    }
+
+    public void setActionGridViewAdapter(ActionGridViewAdapter aActionGridViewAdapter) {
+        mActionGridViewAdapter = aActionGridViewAdapter;
+    }
+
+    public ActionGridViewAdapter getActionGridViewAdapter() {
+        return mActionGridViewAdapter;
     }
 }

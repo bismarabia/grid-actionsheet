@@ -79,4 +79,20 @@ public class ActionGridViewAdapter extends ArrayAdapter<Action> {
         }
         return contentView;
     }
+
+    /**
+     * @param aAction {@link Action} object
+     */
+    public void addItem(Action aAction) {
+        mActions.add(aAction);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * @param aActions list of {@link Action} object
+     */
+    public void addItems(List<Action> aActions) {
+        mActions.addAll(aActions);
+        notifyDataSetChanged();
+    }
 }

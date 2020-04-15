@@ -3,20 +3,19 @@ package bisma.rabia.actionsheet;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 
 import com.annimon.stream.Stream;
 import com.google.android.material.bottomsheet.*;
 
-import java.util.*;
+import java.util.List;
 
-import androidx.annotation.*;
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.*;
 import bisma.rabia.actionsheet.adapter.*;
-import bisma.rabia.actionsheet.databinding.*;
+import bisma.rabia.actionsheet.databinding.LyoActionSheetBinding;
 import bisma.rabia.actionsheet.model.*;
 import bisma.rabia.actionsheet.util.Utils;
 
@@ -89,7 +88,12 @@ public class ActionSheet extends BottomSheetDialogFragment {
                 linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
                 actionSheetBinding.rvActionSheet.setLayoutManager(linearLayoutManager);
                 actionSheetBinding.rvActionSheet.setHasFixedSize(true);
-                actionSheetBinding.rvActionSheet.setAdapter(new ActionGroupAdapter(mActivity, this));
+                final ActionGroupAdapter adapter = new ActionGroupAdapter(mActivity, this);
+                actionSheetBinding.rvActionSheet.setAdapter(adapter);
+                if (Utils.isObjectNotNull(mActionSheetBuilder.getGroupActionAdapterListener())) {
+                    mActionSheetBuilder.getGroupActionAdapterListener().onGroupActionAdapterAdapted(adapter);
+                }
+                mActionSheetBuilder.setActionGroupAdapter(adapter);
             }
             else {
                 // filter only visible actions
@@ -97,7 +101,12 @@ public class ActionSheet extends BottomSheetDialogFragment {
 
                 // set the adapter
                 actionSheetBinding.gridView.setVisibility(View.VISIBLE);
-                actionSheetBinding.gridView.setAdapter(new ActionGridViewAdapter(this, mActions, mActionsClickListener));
+                final ActionGridViewAdapter actionGridViewAdapter = new ActionGridViewAdapter(this, mActions, mActionsClickListener);
+                actionSheetBinding.gridView.setAdapter(actionGridViewAdapter);
+                mActionSheetBuilder.setActionGridViewAdapter(actionGridViewAdapter);
+                if (Utils.isObjectNotNull(mActionSheetBuilder.getActionAdapterListener())) {
+                    mActionSheetBuilder.getActionAdapterListener().onActionAdapterAdapted(actionGridViewAdapter);
+                }
             }
 
             // cancel action sheet.

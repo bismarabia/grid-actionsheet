@@ -57,7 +57,23 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
         return Utils.isObjectNotNull(mGroupedActions) ? mGroupedActions.size() : 0;
     }
 
-    static class ActionGroupHolder extends RecyclerView.ViewHolder {
+    /**
+     * @param aActionGroup {@link ActionGroup} object
+     */
+    public void addItem(ActionGroup aActionGroup) {
+        mGroupedActions.add(aActionGroup);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * @param aActionGroups list of {@link ActionGroup} object
+     */
+    public void addItems(List<ActionGroup> aActionGroups) {
+        mGroupedActions.addAll(aActionGroups);
+        notifyDataSetChanged();
+    }
+
+    public static class ActionGroupHolder extends RecyclerView.ViewHolder {
 
         public final TextView mTitle;
         public final ActionGridView mGridView;
