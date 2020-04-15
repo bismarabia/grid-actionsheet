@@ -1,4 +1,4 @@
-package bisma.rabia.library;
+package bisma.rabia.actionsheet;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -15,10 +15,10 @@ import java.util.List;
 import androidx.annotation.*;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
-import bisma.rabia.library.databinding.*;
-import bisma.rabia.library.util.Utils;
+import bisma.rabia.actionsheet.databinding.*;
+import bisma.rabia.actionsheet.util.Utils;
 
-import static bisma.rabia.library.util.Utils.TAG;
+import static bisma.rabia.actionsheet.util.Utils.TAG;
 
 public class ActionSheet extends BottomSheetDialogFragment {
 
