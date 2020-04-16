@@ -107,6 +107,22 @@ public class ActionSheet extends BottomSheetDialogFragment {
                 if (Utils.isObjectNotNull(mActionSheetBuilder.getActionAdapterListener())) {
                     mActionSheetBuilder.getActionAdapterListener().onActionAdapterAdapted(actionGridViewAdapter);
                 }
+                actionSheetBinding.gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        // remove the callback to prevent inifnite loop.
+                        actionSheetBinding.gridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                        ViewGroup.LayoutParams params = actionSheetBinding.gridView.getLayoutParams();
+
+                        // get the number of rows
+                        final double rowDouble = mActions.size() / 4.0;
+                        int rows = rowDouble > 1.0 && rowDouble > ((int) rowDouble) && rowDouble < ((int) rowDouble) + 1 ? (int) (rowDouble + 1) : (int) rowDouble;
+                        // 250 is a magic number. :-)
+                        params.height = 250 * rows;
+                        actionSheetBinding.gridView.setLayoutParams(params);
+                    }
+                });
             }
 
             // cancel action sheet.

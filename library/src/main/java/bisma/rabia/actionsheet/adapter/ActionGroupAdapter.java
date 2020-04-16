@@ -50,6 +50,22 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
         final int size = actions.size();
         holder.mGridView.setAdapter(new ActionGridViewAdapter(mActionSheet, actions, actionsClickListener));
 
+        holder.mGridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // remove the callback to prevent inifnite loop.
+                holder.mGridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                ViewGroup.LayoutParams params = holder.mGridView.getLayoutParams();
+
+                // get the number of rows
+                final double rowDouble = size / 4.0;
+                int rows = rowDouble > 1.0 && rowDouble > ((int) rowDouble) && rowDouble < ((int) rowDouble) + 1 ? (int) (rowDouble + 1) : (int) rowDouble;
+                // 250 is a magic number. :-)
+                params.height = 250 * rows;
+                holder.mGridView.setLayoutParams(params);
+            }
+        });
     }
 
     @Override

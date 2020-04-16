@@ -2,6 +2,7 @@ package bisma.rabia.actionsheet.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.GridView;
 
 public class ActionGridView extends GridView {
@@ -20,7 +21,7 @@ public class ActionGridView extends GridView {
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
-        super.onMeasure(widthMeasureSpec, expandSpec);
+        int heightSpec = getLayoutParams().height == LayoutParams.WRAP_CONTENT ? MeasureSpec.makeMeasureSpec(View.MEASURED_SIZE_MASK, MeasureSpec.AT_MOST) : heightMeasureSpec;
+        super.onMeasure(widthMeasureSpec, heightSpec);
     }
 }
