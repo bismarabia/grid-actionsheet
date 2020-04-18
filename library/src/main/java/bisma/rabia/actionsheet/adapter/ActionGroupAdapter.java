@@ -62,6 +62,9 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
         if (actionGroup.isEnableExpandable()) {
             holder.mTitle.setVisibility(View.GONE);
             holder.mItemBinding.lyoGroupedGridviewItemExpandableContainer.setBackgroundResource(R.drawable.border_expandable_layout_header);
+            if (actionGroup.isExpandedOnStart()) {
+                holder.mExpandableLayout.expand();
+            }
         }
         else {
             holder.mItemBinding.incFilterPostableListTableStateHeader.getRoot().setVisibility(View.GONE);
@@ -128,7 +131,7 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
             mGridView = aItemBinding.gvActionGroup;
             mItemBinding = aItemBinding;
             isHeightCalculated = false;
-            mExpandableLayout = new OoExpandableLayout(aItemBinding.incFilterPostableListTableStateHeader, aItemBinding.exlFilterPostableListTableState, 0, null, null).directClick();
+            mExpandableLayout = new OoExpandableLayout(aItemBinding.incFilterPostableListTableStateHeader, aItemBinding.exlFilterPostableListTableState, 0, null);
         }
     }
 }

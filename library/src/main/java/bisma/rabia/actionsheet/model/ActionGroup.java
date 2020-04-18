@@ -9,6 +9,7 @@ public class ActionGroup {
     private List<Action> mActions;
     private boolean isHeightCalculated;
     private boolean mEnableExpandable;
+    private boolean mExpandedOnStart;
 
     public ActionGroup(String aTitle, List<Action> aActions) {
         mTitle = aTitle;
@@ -46,6 +47,15 @@ public class ActionGroup {
     public ActionGroup withEnableExpandable(boolean aEnableExpandable) {
         mEnableExpandable = aEnableExpandable;
         return this;
+    }
+
+    public ActionGroup withExpandedOnStart(boolean aExpandedOnStart) {
+        mExpandedOnStart = aExpandedOnStart;
+        return this;
+    }
+
+    public boolean isExpandedOnStart() {
+        return mExpandedOnStart;
     }
 
     @Override

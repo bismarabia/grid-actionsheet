@@ -18,6 +18,7 @@ import bisma.rabia.actionsheet.adapter.*;
 import bisma.rabia.actionsheet.databinding.LyoActionSheetBinding;
 import bisma.rabia.actionsheet.model.*;
 import bisma.rabia.actionsheet.util.Utils;
+import bisma.rabia.actionsheet.view.OoExpandableLayout;
 
 import static bisma.rabia.actionsheet.util.Utils.TAG;
 
@@ -107,22 +108,7 @@ public class ActionSheet extends BottomSheetDialogFragment {
                 if (Utils.isObjectNotNull(mActionSheetBuilder.getActionAdapterListener())) {
                     mActionSheetBuilder.getActionAdapterListener().onActionAdapterAdapted(actionGridViewAdapter);
                 }
-                actionSheetBinding.gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        // remove the callback to prevent inifnite loop.
-                        actionSheetBinding.gridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-                        ViewGroup.LayoutParams params = actionSheetBinding.gridView.getLayoutParams();
-
-                        // get the number of rows
-                        final double rowDouble = mActions.size() / 4.0;
-                        int rows = rowDouble > 1.0 && rowDouble > ((int) rowDouble) && rowDouble < ((int) rowDouble) + 1 ? (int) (rowDouble + 1) : (int) rowDouble;
-                        // 250 is a magic number. :-)
-                        params.height = 250 * rows;
-                        actionSheetBinding.gridView.setLayoutParams(params);
-                    }
-                });
+                new OoExpandableLayout(actionSheetBinding.exlActionSheetGridView);
             }
 
             // cancel action sheet.

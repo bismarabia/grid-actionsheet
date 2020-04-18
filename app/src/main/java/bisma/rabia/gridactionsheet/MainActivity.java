@@ -22,11 +22,13 @@ public class MainActivity extends AppCompatActivity {
         ActionSheetBuilder actionSheetBuilder = new ActionSheetBuilder(this)
                 .withDefaultActionIcon(R.drawable.ico_unknown_black_24dp)
                 .withGroupedActions(new ArrayList<ActionGroup>() {{
+
                     add(new ActionGroup("General", new ArrayList<Action>() {{
                         add(new Action(0, 0, "Camera"));
                         add(new Action(1, getResources().getDrawable(R.drawable.ic_menu_gallery), "Gallery"));
                         add(new Action(2, getResources().getDrawable(R.drawable.ic_menu_manage), "Manage"));
-                    }}).withEnableExpandable(true));
+                    }}).withEnableExpandable(true).withExpandedOnStart(true));
+
                     add(new ActionGroup("Non-Standard", new ArrayList<Action>() {{
                         add(new Action(3, getResources().getDrawable(R.drawable.ic_menu_send), "Send"));
                         add(new Action(4, getResources().getDrawable(R.drawable.ic_menu_share), "Share"));

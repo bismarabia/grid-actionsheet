@@ -31,16 +31,20 @@ public class OoExpandableLayout {
     private int mExpandableID = 0;
     private IOoExpandableLayout mIOoExpandableLayout = null;
 
-    public OoExpandableLayout(LayoutExpandableLayoutHeaderBinding aLayoutExpandableLayoutBinding, ExpandableLayout aTargetLayout, int aId, String aDefaultTitle, IOoExpandableLayout aIOoExpandableLayout) {
-        if (validateExpandable(aLayoutExpandableLayoutBinding) && Utils.isObjectNotNull(aTargetLayout)) {
+    public OoExpandableLayout(LayoutExpandableLayoutHeaderBinding aLayoutExpandableLayoutBinding, ExpandableLayout aTargetLayout, int aId, IOoExpandableLayout aIOoExpandableLayout) {
+        if (Utils.isObjectNotNull(aTargetLayout)) {
             mLayoutExpandableLayoutBinding = aLayoutExpandableLayoutBinding;
             mTargetLayout = aTargetLayout;
             mExpandableID = aId;
             mIOoExpandableLayout = aIOoExpandableLayout;
-            setTitle(aDefaultTitle);
-            aLayoutExpandableLayoutBinding.txvExpandableLayoutText.setOnClickListener(v -> directClick());
-            aLayoutExpandableLayoutBinding.imvExpandableAction.setOnClickListener(v -> directClick());
-            aLayoutExpandableLayoutBinding.lyoExpandableLayout.setOnClickListener(v -> onAction());
+            if (Utils.isObjectNotNull(mLayoutExpandableLayoutBinding)) {
+                mLayoutExpandableLayoutBinding.txvExpandableLayoutText.setOnClickListener(v -> expand());
+                mLayoutExpandableLayoutBinding.imvExpandableAction.setOnClickListener(v -> expand());
+                mLayoutExpandableLayoutBinding.lyoExpandableLayout.setOnClickListener(v -> onAction());
+            }
+            else {
+                onAction();
+            }
             refreshTargetLayout();
             mTargetLayout.setOnExpansionUpdateListener((expansionFraction, state) -> {
                 if (mIOoExpandableLayout instanceof IOoExpandableLayoutExpansionState && (state == ExpandableLayout.State.EXPANDED || state == ExpandableLayout.State.EXPANDING)) {
@@ -48,6 +52,10 @@ public class OoExpandableLayout {
                 }
             });
         }
+    }
+
+    public OoExpandableLayout(ExpandableLayout aTargetLayout) {
+        this(null, aTargetLayout, 0, null);
     }
 
     public void hideExpandableLayout() {
@@ -68,8 +76,13 @@ public class OoExpandableLayout {
         mTargetLayout.setExpanded(false, false);
     }
 
-    public OoExpandableLayout directClick() {
-        mLayoutExpandableLayoutBinding.lyoExpandableLayout.performClick();
+    public OoExpandableLayout expand() {
+        if (Utils.isObjectNotNull(mLayoutExpandableLayoutBinding)) {
+            mLayoutExpandableLayoutBinding.lyoExpandableLayout.performClick();
+        }
+        else {
+            onAction();
+        }
         return this;
     }
 
@@ -84,18 +97,24 @@ public class OoExpandableLayout {
                 }
                 mCallOnce = false;
             }
-            mLayoutExpandableLayoutBinding.imvExpandableAction.animate().rotation(180F);
+            if (Utils.isObjectNotNull(mLayoutExpandableLayoutBinding)) {
+                mLayoutExpandableLayoutBinding.imvExpandableAction.animate().rotation(180F);
+            }
             mTargetLayout.expand(true);
         }
     }
 
     public void collapse() {
-        mLayoutExpandableLayoutBinding.imvExpandableAction.animate().rotation(0F);
+        if (Utils.isObjectNotNull(mLayoutExpandableLayoutBinding)) {
+            mLayoutExpandableLayoutBinding.imvExpandableAction.animate().rotation(0F);
+        }
         mTargetLayout.collapse(true);
     }
 
     public void setTitle(String aRes) {
-        mLayoutExpandableLayoutBinding.getRoot().post(() -> mLayoutExpandableLayoutBinding.txvExpandableLayoutText.setText(aRes));
+        if (Utils.isObjectNotNull(mLayoutExpandableLayoutBinding)) {
+            mLayoutExpandableLayoutBinding.getRoot().post(() -> mLayoutExpandableLayoutBinding.txvExpandableLayoutText.setText(aRes));
+        }
     }
 
     private static boolean validateExpandable(LayoutExpandableLayoutHeaderBinding aLayoutExpandableLayoutBinding) {

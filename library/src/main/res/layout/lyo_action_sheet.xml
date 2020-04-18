@@ -33,14 +33,32 @@
             android:paddingStart="30dp"
             android:paddingEnd="30dp"
             >
-            <GridView
-                android:id="@+id/grid_view"
-                style="@style/View_MW"
-                android:numColumns="4"
-                android:horizontalSpacing="15dp"
-                android:verticalSpacing="30dp"
-                android:visibility="gone"
-                />
+            <LinearLayout
+                android:id="@+id/lyo_action_sheet_expandable_container"
+                style="@style/LinearLayout.Selectable"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txv_action_group_title"
+                >
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/exl_action_sheet_grid_view"
+                    style="@style/ExpandableLayout"
+                    >
+                    <androidx.core.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+                        <bisma.rabia.actionsheet.view.ActionGridView
+                            android:id="@+id/grid_view"
+                            style="@style/View_MW"
+                            android:numColumns="4"
+                            android:horizontalSpacing="15dp"
+                            android:verticalSpacing="30dp"
+                            android:visibility="gone"
+                            />
+                    </androidx.core.widget.NestedScrollView>
+                </net.cachapa.expandablelayout.ExpandableLayout>
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_action_sheet"
                 style="@style/View_MW"
