@@ -1,0 +1,31 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyo_expandable_layout"
+        style="@style/View_MW.Selectable"
+        android:padding="2dp"
+        >
+        <TextView
+            android:id="@+id/txv_expandable_layout_text"
+            style="@style/RedContentText.Selectable"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imv_expandable_action"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/black"
+            />
+        <ImageView
+            android:id="@+id/imv_expandable_action"
+            style="@style/ExpandableLayoutActionButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ico_down_gray_24dp"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -8,6 +8,7 @@ public class ActionGroup {
     private String mTitle;
     private List<Action> mActions;
     private boolean isHeightCalculated;
+    private boolean mEnableExpandable;
 
     public ActionGroup(String aTitle, List<Action> aActions) {
         mTitle = aTitle;
@@ -36,6 +37,15 @@ public class ActionGroup {
 
     public void setHeightCalculated(boolean aHeightCalculated) {
         isHeightCalculated = aHeightCalculated;
+    }
+
+    public boolean isEnableExpandable() {
+        return mEnableExpandable;
+    }
+
+    public ActionGroup withEnableExpandable(boolean aEnableExpandable) {
+        mEnableExpandable = aEnableExpandable;
+        return this;
     }
 
     @Override

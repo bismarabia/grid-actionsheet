@@ -19,16 +19,34 @@
             android:textSize="16sp"
             android:textStyle="bold"
             />
-        <bisma.rabia.actionsheet.view.ActionGridView
-            android:id="@+id/gv_action_group"
-            style="@style/View_MW"
+        <LinearLayout
+            android:id="@+id/lyo_grouped_gridview_item_expandable_container"
+            style="@style/LinearLayout.Selectable"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txv_action_group_title"
-            android:layout_marginTop="10dp"
-            android:numColumns="4"
-            android:horizontalSpacing="15dp"
-            android:verticalSpacing="20dp"
-            />
+            >
+            <include
+                android:id="@+id/inc_filter_postable_list_table_state_header"
+                style="@style/Include.List"
+                layout="@layout/layout_expandable_layout_header"
+                />
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/exl_filter_postable_list_table_state"
+                style="@style/ExpandableLayout"
+                >
+                <bisma.rabia.actionsheet.view.ActionGridView
+                    android:id="@+id/gv_action_group"
+                    style="@style/View_MW"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txv_action_group_title"
+                    android:layout_marginTop="10dp"
+                    android:numColumns="4"
+                    android:horizontalSpacing="15dp"
+                    android:verticalSpacing="20dp"
+                    />
+            </net.cachapa.expandablelayout.ExpandableLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

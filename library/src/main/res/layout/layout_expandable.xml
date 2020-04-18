@@ -1,0 +1,31 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyo_expandable"
+        style="@style/ExpandableLayoutHeader"
+        >
+        <include
+            android:id="@+id/inc_expandable_header"
+            style="@style/Include.List"
+            layout="@layout/layout_expandable_layout_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/exl_expandable"
+            style="@style/ExpandableLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inc_expandable_header"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                style="@style/View_MW"
+                >
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </net.cachapa.expandablelayout.ExpandableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

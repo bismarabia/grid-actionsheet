@@ -16,7 +16,7 @@ import bisma.rabia.actionsheet.*;
 import bisma.rabia.actionsheet.databinding.LayoutGroupGridviewItemBinding;
 import bisma.rabia.actionsheet.model.*;
 import bisma.rabia.actionsheet.util.Utils;
-import bisma.rabia.actionsheet.view.ActionGridView;
+import bisma.rabia.actionsheet.view.*;
 
 public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.ActionGroupHolder> {
 
@@ -43,29 +43,29 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
     public void onBindViewHolder(@NonNull ActionGroupHolder holder, int position) {
         final ActionGroup actionGroup = mGroupedActions.get(position);
         holder.mTitle.setText(actionGroup.getTitle());
+
         // filter only visible actions
         List<Action> actions = actionGroup.getActions();
         actions = Stream.ofNullable(actions).filter(action -> Utils.isObjectNull(action.isVisible()) || action.isVisible()).toList();
+
         // set the adapter
-        final int size = actions.size();
         holder.mGridView.setAdapter(new ActionGridViewAdapter(mActionSheet, actions, actionsClickListener));
 
         holder.mGridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                // remove the callback to prevent inifnite loop.
+                // remove the callback to prevent infinite loop.
                 holder.mGridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-                ViewGroup.LayoutParams params = holder.mGridView.getLayoutParams();
-
-                // get the number of rows
-                final double rowDouble = size / 4.0;
-                int rows = rowDouble > 1.0 && rowDouble > ((int) rowDouble) && rowDouble < ((int) rowDouble) + 1 ? (int) (rowDouble + 1) : (int) rowDouble;
-                // 250 is a magic number. :-)
-                params.height = 250 * rows;
-                holder.mGridView.setLayoutParams(params);
             }
         });
+        holder.mExpandableLayout.setTitle(actionGroup.getTitle());
+        if (actionGroup.isEnableExpandable()) {
+            holder.mTitle.setVisibility(View.GONE);
+            holder.mItemBinding.lyoGroupedGridviewItemExpandableContainer.setBackgroundResource(R.drawable.border_expandable_layout_header);
+        }
+        else {
+            holder.mItemBinding.incFilterPostableListTableStateHeader.getRoot().setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -116,7 +116,9 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
 
         public final TextView mTitle;
         public final ActionGridView mGridView;
+        private LayoutGroupGridviewItemBinding mItemBinding;
         public final ConstraintLayout mLyoGroupedGridViewItem;
+        public final OoExpandableLayout mExpandableLayout;
         public boolean isHeightCalculated;
 
         public ActionGroupHolder(@NonNull LayoutGroupGridviewItemBinding aItemBinding) {
@@ -124,7 +126,9 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
             mLyoGroupedGridViewItem = aItemBinding.lyoGroupedGridviewItem;
             mTitle = aItemBinding.txvActionGroupTitle;
             mGridView = aItemBinding.gvActionGroup;
+            mItemBinding = aItemBinding;
             isHeightCalculated = false;
+            mExpandableLayout = new OoExpandableLayout(aItemBinding.incFilterPostableListTableStateHeader, aItemBinding.exlFilterPostableListTableState, 0, null, null).directClick();
         }
     }
 }

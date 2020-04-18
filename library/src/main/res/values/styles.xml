@@ -40,4 +40,49 @@
         <item name="android:focusable">true</item>
         <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
+
+    <style name="LinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="LinearLayout.Selectable">
+        <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="ExpandableLayoutHeader" parent="LinearLayout.Selectable">
+        <item name="android:background">@drawable/border_expandable_layout_header</item>
+    </style>
+
+    <style name="Include">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Include.List">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="RedContentText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorDarkRed</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RedContentText.Selectable">
+        <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="ExpandableLayoutActionButton">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:src">@drawable/ico_down_black_24dp</item>
+    </style>
+
+    <style name="ExpandableLayout" parent="View_MW">
+        <item name="el_duration">1000</item>
+        <item name="el_expanded">false</item>
+    </style>
 </resources>
