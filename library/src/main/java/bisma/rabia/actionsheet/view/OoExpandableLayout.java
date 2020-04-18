@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import androidx.annotation.StringRes;
 import androidx.collection.SparseArrayCompat;
-import bisma.rabia.actionsheet.databinding.LayoutExpandableLayoutHeaderBinding;
+import bisma.rabia.actionsheet.databinding.LayoutActionSheetExpandableHeaderBinding;
 import bisma.rabia.actionsheet.util.Utils;
 
 /**
@@ -26,12 +26,12 @@ public class OoExpandableLayout {
     }
 
     private boolean mCallOnce = true;
-    private LayoutExpandableLayoutHeaderBinding mLayoutExpandableLayoutBinding = null;
+    private LayoutActionSheetExpandableHeaderBinding mLayoutExpandableLayoutBinding = null;
     private ExpandableLayout mTargetLayout = null;
     private int mExpandableID = 0;
     private IOoExpandableLayout mIOoExpandableLayout = null;
 
-    public OoExpandableLayout(LayoutExpandableLayoutHeaderBinding aLayoutExpandableLayoutBinding, ExpandableLayout aTargetLayout, int aId, IOoExpandableLayout aIOoExpandableLayout) {
+    public OoExpandableLayout(LayoutActionSheetExpandableHeaderBinding aLayoutExpandableLayoutBinding, ExpandableLayout aTargetLayout, int aId, IOoExpandableLayout aIOoExpandableLayout) {
         if (Utils.isObjectNotNull(aTargetLayout)) {
             mLayoutExpandableLayoutBinding = aLayoutExpandableLayoutBinding;
             mTargetLayout = aTargetLayout;
@@ -117,7 +117,7 @@ public class OoExpandableLayout {
         }
     }
 
-    private static boolean validateExpandable(LayoutExpandableLayoutHeaderBinding aLayoutExpandableLayoutBinding) {
+    private static boolean validateExpandable(LayoutActionSheetExpandableHeaderBinding aLayoutExpandableLayoutBinding) {
         return aLayoutExpandableLayoutBinding != null;
     }
 

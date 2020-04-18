@@ -29,7 +29,7 @@
             <include
                 android:id="@+id/inc_filter_postable_list_table_state_header"
                 style="@style/Include.List"
-                layout="@layout/layout_expandable_layout_header"
+                layout="@layout/layout_action_sheet_expandable_header"
                 />
             <net.cachapa.expandablelayout.ExpandableLayout
                 android:id="@+id/exl_filter_postable_list_table_state"

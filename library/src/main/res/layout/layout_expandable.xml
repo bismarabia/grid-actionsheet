@@ -9,7 +9,7 @@
         <include
             android:id="@+id/inc_expandable_header"
             style="@style/Include.List"
-            layout="@layout/layout_expandable_layout_header"
+            layout="@layout/layout_action_sheet_expandable_header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
