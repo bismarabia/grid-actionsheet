@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     add(new Action(3, getResources().getDrawable(R.drawable.ic_menu_send), "Send"));
                     add(new Action(4, getResources().getDrawable(R.drawable.ic_menu_share), "Share"));
                 }})
+                .putExpandableAtTheEnd(false)
                 .withActionsClickListener(aId -> {
                     // handle item click event.
                 })

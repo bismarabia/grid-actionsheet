@@ -89,6 +89,9 @@ public class ActionSheet extends BottomSheetDialogFragment {
                 linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
                 actionSheetBinding.rvActionSheet.setLayoutManager(linearLayoutManager);
                 actionSheetBinding.rvActionSheet.setHasFixedSize(true);
+                if (mActionSheetBuilder.isPutExpandableAtTheEnd()) {
+                    mGroupedActions = Stream.of(mGroupedActions).sortBy(ActionGroup::isEnableExpandable).toList();
+                }
                 final ActionGroupAdapter adapter = new ActionGroupAdapter(mActivity, this);
                 actionSheetBinding.rvActionSheet.setAdapter(adapter);
                 if (Utils.isObjectNotNull(mActionSheetBuilder.getGroupActionAdapterListener())) {
@@ -115,34 +118,38 @@ public class ActionSheet extends BottomSheetDialogFragment {
             actionSheetBinding.lyoActionSheetCancel.setOnClickListener(v -> dismiss());
 
             // handle the action sheet height and set dragging state accordingly.
-            actionSheetBinding.lyoActionSheetMainContainer.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-                final int fullScreenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
-                final int bottomSheetHeight = actionSheetBinding.lyoActionSheetMainContainer.getMeasuredHeight();
-                int resource = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android");
-                if (resource > 0) {
-                    int screenHeightWithoutStatusBar = fullScreenHeight - Resources.getSystem().getDimensionPixelSize(resource);
-                    // if the actionSheet height is bigger than screen height disable actionSheet's dragging feature
-                    if (bottomSheetHeight >= screenHeightWithoutStatusBar) {
-                        // disable dragging.
-                        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-                            @Override
-                            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
-                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            actionSheetBinding.lyoActionSheetMainContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    final int fullScreenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+                    final int bottomSheetHeight = actionSheetBinding.lyoActionSheetMainContainer.getMeasuredHeight();
+                    int resource = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android");
+                    if (resource > 0) {
+                        int screenHeightWithoutStatusBar = fullScreenHeight - Resources.getSystem().getDimensionPixelSize(resource);
+                        // if the actionSheet height is bigger than screen height disable actionSheet's dragging feature
+                        if (bottomSheetHeight >= screenHeightWithoutStatusBar) {
+                            // disable dragging.
+                            bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                                @Override
+                                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+                                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                                @Override
+                                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
-                            }
-                        });
+                                }
+                            });
 
-                        // decrease the height of gridView so that we can fit the cancel button.
-                        final int measuredHeight = actionSheetBinding.lyoActionSheetGridView.getMeasuredHeight();
-                        final ViewGroup.LayoutParams layoutParams = actionSheetBinding.lyoActionSheetGridView.getLayoutParams();
-                        layoutParams.height = measuredHeight - actionSheetBinding.lyoActionSheetCancel.getMeasuredHeight() * 2 / 3;
-                        actionSheetBinding.lyoActionSheetGridView.setLayoutParams(layoutParams);
+                            // decrease the height of gridView so that we can fit the cancel button.
+                            final int measuredHeight = actionSheetBinding.nsvActionSheetGridView.getMeasuredHeight();
+                            final ViewGroup.LayoutParams layoutParams = actionSheetBinding.nsvActionSheetGridView.getLayoutParams();
+                            layoutParams.height = measuredHeight - actionSheetBinding.lyoActionSheetCancel.getMeasuredHeight() * 4 / 3;
+                            actionSheetBinding.nsvActionSheetGridView.setLayoutParams(layoutParams);
+                            actionSheetBinding.lyoActionSheetMainContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        }
                     }
                 }
             });

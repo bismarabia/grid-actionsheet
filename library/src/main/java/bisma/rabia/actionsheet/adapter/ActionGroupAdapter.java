@@ -51,13 +51,6 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
         // set the adapter
         holder.mGridView.setAdapter(new ActionGridViewAdapter(mActionSheet, actions, actionsClickListener));
 
-        holder.mGridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                // remove the callback to prevent infinite loop.
-                holder.mGridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
         holder.mExpandableLayout.setTitle(actionGroup.getTitle());
         if (actionGroup.isEnableExpandable()) {
             holder.mTitle.setVisibility(View.GONE);
@@ -67,7 +60,8 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
             }
         }
         else {
-            holder.mItemBinding.incFilterPostableListTableStateHeader.getRoot().setVisibility(View.GONE);
+            holder.mItemBinding.incGroupGridViewItemHeader.getRoot().setVisibility(View.GONE);
+            holder.mExpandableLayout.expand();
         }
     }
 
@@ -131,7 +125,7 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
             mGridView = aItemBinding.gvActionGroup;
             mItemBinding = aItemBinding;
             isHeightCalculated = false;
-            mExpandableLayout = new OoExpandableLayout(aItemBinding.incFilterPostableListTableStateHeader, aItemBinding.exlFilterPostableListTableState, 0, null);
+            mExpandableLayout = new OoExpandableLayout(aItemBinding.incGroupGridViewItemHeader, aItemBinding.exlGroupGridViewItem, 0, null);
         }
     }
 }

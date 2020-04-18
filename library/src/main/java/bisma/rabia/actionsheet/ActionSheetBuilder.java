@@ -11,6 +11,8 @@ import bisma.rabia.actionsheet.model.*;
 
 public class ActionSheetBuilder {
 
+    private boolean mPutExpandableAtTheEnd;
+
     /**
      * action items click callback
      */
@@ -113,6 +115,11 @@ public class ActionSheetBuilder {
         return this;
     }
 
+    public ActionSheetBuilder putExpandableAtTheEnd(boolean aPutExpandableAtTheEnd) {
+        mPutExpandableAtTheEnd = aPutExpandableAtTheEnd;
+        return this;
+    }
+
     /**
      * show the ActionSheet.
      *
@@ -191,5 +198,9 @@ public class ActionSheetBuilder {
 
     public ActionGridViewAdapter getActionGridViewAdapter() {
         return mActionGridViewAdapter;
+    }
+
+    public boolean isPutExpandableAtTheEnd() {
+        return mPutExpandableAtTheEnd;
     }
 }
