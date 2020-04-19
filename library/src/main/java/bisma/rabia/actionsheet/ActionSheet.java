@@ -18,7 +18,7 @@ import bisma.rabia.actionsheet.adapter.*;
 import bisma.rabia.actionsheet.databinding.LyoActionSheetBinding;
 import bisma.rabia.actionsheet.model.*;
 import bisma.rabia.actionsheet.util.Utils;
-import bisma.rabia.actionsheet.view.OoExpandableLayout;
+import bisma.rabia.actionsheet.view.ActionExpandableLayout;
 
 import static bisma.rabia.actionsheet.util.Utils.TAG;
 
@@ -111,7 +111,7 @@ public class ActionSheet extends BottomSheetDialogFragment {
                 if (Utils.isObjectNotNull(mActionSheetBuilder.getActionAdapterListener())) {
                     mActionSheetBuilder.getActionAdapterListener().onActionAdapterAdapted(actionGridViewAdapter);
                 }
-                new OoExpandableLayout(actionSheetBinding.exlActionSheetGridView);
+                new ActionExpandableLayout(actionSheetBinding.exlActionSheetGridView);
             }
 
             // cancel action sheet.

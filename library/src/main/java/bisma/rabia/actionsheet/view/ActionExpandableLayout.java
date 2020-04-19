@@ -15,7 +15,7 @@ import bisma.rabia.actionsheet.util.Utils;
  * Created by mgur on 8/9/18.
  */
 
-public class OoExpandableLayout {
+public class ActionExpandableLayout {
 
     public interface IOoExpandableLayout {
         void onLoadOnce(int aExpandableID);
@@ -31,7 +31,7 @@ public class OoExpandableLayout {
     private int mExpandableID = 0;
     private IOoExpandableLayout mIOoExpandableLayout = null;
 
-    public OoExpandableLayout(LayoutActionSheetExpandableHeaderBinding aLayoutExpandableLayoutBinding, ExpandableLayout aTargetLayout, int aId, IOoExpandableLayout aIOoExpandableLayout) {
+    public ActionExpandableLayout(LayoutActionSheetExpandableHeaderBinding aLayoutExpandableLayoutBinding, ExpandableLayout aTargetLayout, int aId, IOoExpandableLayout aIOoExpandableLayout) {
         if (Utils.isObjectNotNull(aTargetLayout)) {
             mLayoutExpandableLayoutBinding = aLayoutExpandableLayoutBinding;
             mTargetLayout = aTargetLayout;
@@ -54,7 +54,7 @@ public class OoExpandableLayout {
         }
     }
 
-    public OoExpandableLayout(ExpandableLayout aTargetLayout) {
+    public ActionExpandableLayout(ExpandableLayout aTargetLayout) {
         this(null, aTargetLayout, 0, null);
     }
 
@@ -76,7 +76,7 @@ public class OoExpandableLayout {
         mTargetLayout.setExpanded(false, false);
     }
 
-    public OoExpandableLayout expand() {
+    public ActionExpandableLayout expand() {
         if (Utils.isObjectNotNull(mLayoutExpandableLayoutBinding)) {
             mLayoutExpandableLayoutBinding.lyoExpandableLayout.performClick();
         }
@@ -127,7 +127,7 @@ public class OoExpandableLayout {
         return views;
     }
 
-    public static void collapseOtherExpandables(SparseArrayCompat<OoExpandableLayout> aOoExpandableMap, int aExpandableID) {
+    public static void collapseOtherExpandables(SparseArrayCompat<ActionExpandableLayout> aOoExpandableMap, int aExpandableID) {
         if (Utils.isObjectNull(aOoExpandableMap)) {
             return;
         }

@@ -115,7 +115,7 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
         public final ActionGridView mGridView;
         private LayoutGroupGridviewItemBinding mItemBinding;
         public final ConstraintLayout mLyoGroupedGridViewItem;
-        public final OoExpandableLayout mExpandableLayout;
+        public final ActionExpandableLayout mExpandableLayout;
         public boolean isHeightCalculated;
 
         public ActionGroupHolder(@NonNull LayoutGroupGridviewItemBinding aItemBinding) {
@@ -125,7 +125,7 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
             mGridView = aItemBinding.gvActionGroup;
             mItemBinding = aItemBinding;
             isHeightCalculated = false;
-            mExpandableLayout = new OoExpandableLayout(aItemBinding.incGroupGridViewItemHeader, aItemBinding.exlGroupGridViewItem, 0, null);
+            mExpandableLayout = new ActionExpandableLayout(aItemBinding.incGroupGridViewItemHeader, aItemBinding.exlGroupGridViewItem, 0, null);
         }
     }
 }
