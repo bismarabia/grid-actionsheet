@@ -1,41 +1,85 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyo_reminder_list_item_info"
+        style="@style/View_WW"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
         >
-        <Button
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/cap_reminder_list_description"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:textSize="12sp"
+            android:textColor="@color/colorWolfGrey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Description"
             />
-        <Button
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/txv_reminder_list_description"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cap_reminder_list_description"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:text="Reminder Description"
             />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        >
-        <Button
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/cap_reminder_list_refcode"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:textSize="12sp"
+            android:textColor="@color/colorWolfGrey"
+            app:layout_constraintEnd_toStartOf="@id/gdl_reminder_list_col1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txv_reminder_list_description"
+            android:text="RefCode"
             />
-        <Button
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/txv_reminder_list_refcode"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Button"
+            app:layout_constraintEnd_toEndOf="@id/gdl_reminder_list_col1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cap_reminder_list_refcode"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:text="DEV.O1"
             />
-    </LinearLayout>
-</LinearLayout>
+        <TextView
+            android:id="@+id/cap_reminder_list_duedate_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/colorWolfGrey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gdl_reminder_list_col1"
+            app:layout_constraintTop_toBottomOf="@id/txv_reminder_list_description"
+            android:text="DueDateTime"
+            />
+        <TextView
+            android:id="@+id/txv_reminder_list_duedate_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gdl_reminder_list_col1"
+            app:layout_constraintTop_toBottomOf="@id/cap_reminder_list_duedate_time"
+            android:maxLines="1"
+            android:textColor="@android:color/black"
+            android:text="2020-05-01 15:06:55"
+            />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdl_reminder_list_col1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.60"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
