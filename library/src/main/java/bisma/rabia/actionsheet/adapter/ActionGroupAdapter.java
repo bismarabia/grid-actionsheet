@@ -28,7 +28,10 @@ public class ActionGroupAdapter extends RecyclerView.Adapter<ActionGroupAdapter.
     public ActionGroupAdapter(Activity aActivity, ActionSheet aActionSheet) {
         mActivity = aActivity;
         mActionSheet = aActionSheet;
-        mGroupedActions = mActionSheet.getGroupedActions();
+
+        // get rid of groups that have no actions in it.
+        mGroupedActions = Stream.ofNullable(mActionSheet.getGroupedActions()).filter(value -> !value.getActions().isEmpty()).toList();
+
         actionsClickListener = mActionSheet.getActionsClickListener();
     }
 

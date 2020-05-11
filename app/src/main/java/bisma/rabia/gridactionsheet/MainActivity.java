@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         activityMainBinding.btnShowActionSheet.setOnClickListener(v -> {
-
             // show ActionSheet.
             actionSheetBuilder.show();
         });
