@@ -3,6 +3,8 @@ package bisma.rabia.gridactionsheet;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
+import com.mikepenz.iconics.typeface.library.fontawesome.FontAwesome;
+
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
                     // 1st group.
                     add(new ActionGroup("Sync Actions", new ArrayList<Action>() {{
-                        add(new Action(3, getResources().getDrawable(R.drawable.ic_menu_send), "Send"));
-                        add(new Action(4, getResources().getDrawable(R.drawable.ic_menu_share), "Share"));
+                        add(new Action(3, FontAwesome.Icon.faw_envelope, "Send"));
+                        add(new Action(4, FontAwesome.Icon.faw_share, "Share"));
                     }}).withEnableExpandable(true));
 
                     // 2nd group.
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 // or use normal grid ActionSheet.
                 .withActions(new ArrayList<Action>() {{
                     add(new Action(0, 0, "Camera"));
-                    add(new Action(1, getResources().getDrawable(R.drawable.ic_menu_gallery), "Gallery"));
+                    add(new Action(1, FontAwesome.Icon.faw_anchor, "Gallery"));
                     add(new Action(2, getResources().getDrawable(R.drawable.ic_menu_manage), "Manage"));
                     add(new Action(3, getResources().getDrawable(R.drawable.ic_menu_send), "Send"));
                     add(new Action(4, getResources().getDrawable(R.drawable.ic_menu_share), "Share"));

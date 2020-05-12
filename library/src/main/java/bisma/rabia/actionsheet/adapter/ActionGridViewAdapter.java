@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.view.*;
 import android.widget.ArrayAdapter;
 
+import com.mikepenz.iconics.*;
+
 import java.util.List;
 
 import androidx.annotation.*;
@@ -52,6 +54,10 @@ public class ActionGridViewAdapter extends ArrayAdapter<Action> {
             if (Utils.isObjectNull(action.getDrawable())) {
                 if (action.getIconDrwInt() != 0) {
                     action.setIconDrw(mContext.getResources().getDrawable(action.getIconDrwInt()));
+                }
+                else if (Utils.isObjectNotNull(action.getIIcon())) {
+                    // using by default 24dp as icon size, and black color as icon color.
+                    action.setIconDrw(new IconicsDrawable(mContext, action.getIIcon()).color(IconicsColor.colorRes(android.R.color.black)).size(IconicsSize.dp(24)));
                 }
                 else {
                     final int defaultIcon = mActionSheet.getActionSheetBuilder().getDefaultActionIcon();

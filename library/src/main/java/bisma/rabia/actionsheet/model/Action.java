@@ -3,12 +3,15 @@ package bisma.rabia.actionsheet.model;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import com.mikepenz.iconics.typeface.IIcon;
+
 import androidx.annotation.DrawableRes;
 
 public class Action {
     private int mId;
     private int mIconDrwInt;
     private Drawable mIconDrw;
+    private IIcon mIIcon;
     private String mTitle;
     private View.OnClickListener mOnClickListener;
     private Boolean mIsVisible;
@@ -21,6 +24,11 @@ public class Action {
     public Action(int aId, Drawable aIconDrw, String aTitle) {
         this(aId, aTitle);
         mIconDrw = aIconDrw;
+    }
+
+    public Action(int aId, IIcon aIIcon, String aTitle) {
+        this(aId, aTitle);
+        mIIcon = aIIcon;
     }
 
     public Action(int aId, int aIcon, String aTitle) {
@@ -49,6 +57,10 @@ public class Action {
 
     public Drawable getDrawable() {
         return mIconDrw;
+    }
+
+    public IIcon getIIcon() {
+        return mIIcon;
     }
 
     public void setIconDrw(Drawable aIconDrw) {
