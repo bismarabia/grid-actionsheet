@@ -39,7 +39,7 @@ Add it in your root build.gradle at the end of repositories:
 
 ```css
 	dependencies {
-	        implementation 'com.github.bismarabia:Grid-ActionSheet:${lastestVersion}'
+	        implementation 'com.github.bismarabia:grid-actionsheet:${lastestVersion}'
 	}
 ```
 
@@ -128,10 +128,18 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
+### Font Icons Support
+Added support to custom font icons using [Android-Icons](https://github.com/mikepenz/Android-Iconics) is introduced in version 1.1.0
+```java
+	new Action(0, FontAwesome.Icon.faw_android, "Font Awesome Icon");
+	new Action(1, GoogleMaterial.Icon.gmd_favorite, "Google Material Icon");
+	new Action(2, YourCustomFont.Icon.custom_icon, "Custom Font Icon");
+	...
+```
 
 ### Developed By
 -	Rabia Abismail
 -	Software Engineer.
 
 ### Community
-If you have any issue regarding this library, or if you have any suggestion please open an [issue](https://github.com/bismarabia/Grid-ActionSheet/issues/new) and lemme know.
+If you have any issue regarding this library, or if you have any suggestion please open an [issue](https://github.com/bismarabia/grid-actionSheet/issues/new) and lemme know.
