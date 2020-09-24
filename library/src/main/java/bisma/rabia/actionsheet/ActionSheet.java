@@ -81,6 +81,9 @@ public class ActionSheet extends BottomSheetDialogFragment {
             }
 
 
+            // filter only visible actions
+            mActions = Stream.ofNullable(mActions).filter(actions -> Utils.isObjectNull(actions.isVisible()) || actions.isVisible()).toList();
+
             final boolean isGroupsEnabled = mGroupedActions != null && !mGroupedActions.isEmpty();
             if (isGroupsEnabled) {
                 // if groups are enabled
@@ -99,10 +102,7 @@ public class ActionSheet extends BottomSheetDialogFragment {
                 }
                 mActionSheetBuilder.setActionGroupAdapter(adapter);
             }
-            else {
-                // filter only visible actions
-                mActions = Stream.of(mActions).filter(actions -> Utils.isObjectNull(actions.isVisible()) || actions.isVisible()).toList();
-
+            else if (!mActions.isEmpty()) {
                 // set the adapter
                 actionSheetBinding.gridView.setVisibility(View.VISIBLE);
                 final ActionGridViewAdapter actionGridViewAdapter = new ActionGridViewAdapter(this, mActions, mActionsClickListener);
@@ -112,6 +112,11 @@ public class ActionSheet extends BottomSheetDialogFragment {
                     mActionSheetBuilder.getActionAdapterListener().onActionAdapterAdapted(actionGridViewAdapter);
                 }
                 new ActionExpandableLayout(actionSheetBinding.exlActionSheetGridView);
+            }
+            else {
+                // if there is no items hide the actions view.
+                actionSheetBinding.nsvActionSheetGridView.setVisibility(View.GONE);
+                actionSheetBinding.vSpace.setVisibility(View.GONE);
             }
 
             // cancel action sheet.
