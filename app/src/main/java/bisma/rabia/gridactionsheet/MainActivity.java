@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                             new ActionGroup("General", new ArrayList<Action>() {{
                                 add(new Action(0, 0, "Camera"));
                                 add(new Action(1, getResources().getDrawable(R.drawable.ic_menu_gallery), "Gallery"));
-                                add(new Action(2, getResources().getDrawable(R.drawable.ic_menu_manage), "Manage"));
+                                add(new Action(2, getResources().getDrawable(R.drawable.ic_menu_manage), "Manage").withIsVisible(false));
                             }})
                                     // enable expandable
                                     .withEnableExpandable(true)

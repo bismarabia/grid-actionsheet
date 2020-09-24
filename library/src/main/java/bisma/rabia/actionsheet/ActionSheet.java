@@ -86,21 +86,28 @@ public class ActionSheet extends BottomSheetDialogFragment {
 
             final boolean isGroupsEnabled = mGroupedActions != null && !mGroupedActions.isEmpty();
             if (isGroupsEnabled) {
-                // if groups are enabled
-                actionSheetBinding.rvActionSheet.setVisibility(View.VISIBLE);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
-                linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-                actionSheetBinding.rvActionSheet.setLayoutManager(linearLayoutManager);
-                actionSheetBinding.rvActionSheet.setHasFixedSize(true);
-                if (mActionSheetBuilder.isPutExpandableAtTheEnd()) {
-                    mGroupedActions = Stream.of(mGroupedActions).sortBy(ActionGroup::isEnableExpandable).toList();
+                final boolean areVisibleItemsPresents = !Stream.of(mGroupedActions).filter(value -> !Stream.of(value.getActions()).filter(action -> Utils.isObjectNull(action.isVisible()) || action.isVisible()).toList().isEmpty()).toList().isEmpty();
+                if (areVisibleItemsPresents) {
+                    // if groups are enabled
+                    actionSheetBinding.rvActionSheet.setVisibility(View.VISIBLE);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
+                    linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                    actionSheetBinding.rvActionSheet.setLayoutManager(linearLayoutManager);
+                    actionSheetBinding.rvActionSheet.setHasFixedSize(true);
+                    if (mActionSheetBuilder.isPutExpandableAtTheEnd()) {
+                        mGroupedActions = Stream.of(mGroupedActions).sortBy(ActionGroup::isEnableExpandable).toList();
+                    }
+                    final ActionGroupAdapter adapter = new ActionGroupAdapter(mActivity, this);
+                    actionSheetBinding.rvActionSheet.setAdapter(adapter);
+                    if (Utils.isObjectNotNull(mActionSheetBuilder.getGroupActionAdapterListener())) {
+                        mActionSheetBuilder.getGroupActionAdapterListener().onGroupActionAdapterAdapted(adapter);
+                    }
+                    mActionSheetBuilder.setActionGroupAdapter(adapter);
                 }
-                final ActionGroupAdapter adapter = new ActionGroupAdapter(mActivity, this);
-                actionSheetBinding.rvActionSheet.setAdapter(adapter);
-                if (Utils.isObjectNotNull(mActionSheetBuilder.getGroupActionAdapterListener())) {
-                    mActionSheetBuilder.getGroupActionAdapterListener().onGroupActionAdapterAdapted(adapter);
+                else {
+                    // if there is no items hide the actions view.
+                    hideGridView(actionSheetBinding);
                 }
-                mActionSheetBuilder.setActionGroupAdapter(adapter);
             }
             else if (!mActions.isEmpty()) {
                 // set the adapter
@@ -115,8 +122,7 @@ public class ActionSheet extends BottomSheetDialogFragment {
             }
             else {
                 // if there is no items hide the actions view.
-                actionSheetBinding.nsvActionSheetGridView.setVisibility(View.GONE);
-                actionSheetBinding.vSpace.setVisibility(View.GONE);
+                hideGridView(actionSheetBinding);
             }
 
             // cancel action sheet.
@@ -161,6 +167,11 @@ public class ActionSheet extends BottomSheetDialogFragment {
         }
 
         return bottomSheet;
+    }
+
+    private void hideGridView(LyoActionSheetBinding aActionSheetBinding) {
+        aActionSheetBinding.nsvActionSheetGridView.setVisibility(View.GONE);
+        aActionSheetBinding.vSpace.setVisibility(View.GONE);
     }
 
     @Override
